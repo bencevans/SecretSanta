@@ -15,9 +15,14 @@ var sequelize = new Sequelize(config.db.database, config.db.username, config.db.
 //
 var models = {
   User      : require('./models/user')(sequelize, Sequelize),
+  Group      : require('./models/group')(sequelize, Sequelize),
 };
 
+models.User.belongsTo(models.Group);
+models.Group.hasMany(models.User);
+
 models.User.sync();
+models.Group.sync();
 
 // Expose the public API
 //

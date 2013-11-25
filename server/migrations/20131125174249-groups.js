@@ -1,13 +1,16 @@
 module.exports = {
   up: function(migration, DataTypes, done) {
 
-    migration.createTable('users', {
+    migration.createTable('groups', {
       id              : {
         type          : 'SERIAL',
         primaryKey    : true,
         allowNull     : false
       },
-      facebookId: DataTypes.STRING,
+      name: {
+        type: DataTypes.STRING,
+        allowNull: false
+      },
       createdAt: DataTypes.DATE,
       updatedAt: DataTypes.DATE
     }).complete(done);
@@ -15,7 +18,7 @@ module.exports = {
   },
   down: function(migration, DataTypes, done) {
 
-    migration.dropTable('users').complete(done);
+    migration.dropTable('groups').complete(done);
 
   }
 };
