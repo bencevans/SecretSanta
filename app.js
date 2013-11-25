@@ -1,7 +1,6 @@
 
 var config     = require('./config');
 var express    = require('express');
-var hbs        = require('hbs');
 var http       = require('http');
 var passport   = require('./server/auth/passport');
 var RedisStore = require( "connect-redis" )(express);

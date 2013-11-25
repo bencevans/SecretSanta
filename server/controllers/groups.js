@@ -1,10 +1,10 @@
 
-var db = require('../db')
+var db = require('../db');
 
 module.exports.list = function(req, res, next) {
   req.user.getGroups().success(function(groups) {
     res.render('groups', { groups: groups });
-  }).error(next)
+  }).error(next);
 };
 
 module.exports.create = function (req, res, next) {
@@ -18,9 +18,13 @@ module.exports.create = function (req, res, next) {
 
 module.exports.show = function(req, res, next) {
   db.Group.find({ where: {id:req.params.group}}).success(function(group) {
-    if(!group) return next();
+    if(!group) {
+      return next();
+    }
     group.getUsers({ where: { id: req.user.id }}).success(function(users) {
-      if(users.length < 1) return next();
+      if(users.length < 1) {
+        return next();
+      }
       res.send(group.dataValues);
     }).error(next);
   }).error(next);
