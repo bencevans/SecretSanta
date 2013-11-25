@@ -1,0 +1,30 @@
+doctype html
+html
+  head(lang='en')
+    title=title || 'Secret Santa'
+    link(rel='stylesheet', href='/bower_components/flatstrap/assets/css/bootstrap.css', media='screen')
+  body
+    .navbar
+      .navbar-inner
+          .container
+            //
+               .btn-navbar is used as the toggle for collapsed navbar content 
+            a.btn.btn-navbar(data-toggle='collapse', data-target='.nav-collapse')
+              span.icon-bar
+              span.icon-bar
+              span.icon-bar
+            //
+               Be sure to leave the brand out there if you want it shown 
+            a.brand(href='/') Secret Santa
+            //
+               Everything you want hidden at 940px or less, place within here 
+            .nav-collapse.collapse
+              //
+                 .nav, .navbar-search, .navbar-form, etc 
+
+    div.container
+
+      block content
+
+    script(src='http://code.jquery.com/jquery-latest.js')
+    script(src='/bower_components/flatstrap/assets/js/bootstrap.min.js')

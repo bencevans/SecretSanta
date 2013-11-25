@@ -1,0 +1,20 @@
+extend layout
+
+block content
+
+  h1 Groups
+  if groups.length !== 0
+    each group in groups
+      div.group-widget
+        h3
+          a(href='/groups/' + group.id)= group.name
+  else
+    p You have no groups.
+
+  form.form-inline(method='POST', action='/groups')
+    fieldset
+      legend Create Group
+      label Group Name:
+      input(type='hidden', name='_csrf', value=csrf)
+      input(type='text' name='name')
+      input.btn(type='submit', value='Create')

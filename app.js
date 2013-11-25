@@ -11,12 +11,13 @@ var app = express();
 
 app.configure('development', function() {
   app.use(express.logger('dev'));
+  app.locals.pretty = true;
 });
 
 app.configure(function() {
-  app.engine('html', hbs.__express);
-  app.set('view engine', 'html');
+  app.engine('jade', require('jade').__express);
   app.set('views', './server/views');
+  app.set('view engine', 'jade');
   app.use(express.static('public'));
   app.use(express.cookieParser());
   app.use(express.bodyParser());
