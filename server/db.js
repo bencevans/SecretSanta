@@ -18,7 +18,7 @@ var models = {
   Group      : require('./models/group')(sequelize, Sequelize),
 };
 
-models.User.belongsTo(models.Group);
+models.User.hasMany(models.Group);
 models.Group.hasMany(models.User);
 
 models.User.sync();
