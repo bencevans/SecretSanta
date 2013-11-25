@@ -1,0 +1,35 @@
+{
+  "name": "secret-santa",
+  "version": "0.0.0",
+  "description": "Create a secret santa group and keep the santas secret!",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "santa",
+    "christmas",
+    "facebook",
+    "social",
+    "presents"
+  ],
+  "author": "Ben Evans <ben@bensbit.co.uk> (http://bensbit.co.uk)",
+  "license": "NO LICENCE",
+  "dependencies": {
+    "passport": "~0.1.17",
+    "passport-facebook": "~1.0.2",
+    "hbs": "~2.4.0",
+    "express": "~3.4.4",
+    "sequelize": "~2.0.0-beta.1",
+    "connect-redis": "~1.4.6",
+    "extend": "~1.2.1",
+    "pg": "~2.8.3",
+    "redis": "~0.9.1"
+  },
+  "devDependencies": {
+    "grunt-contrib-jshint": "~0.7.2",
+    "grunt": "~0.4.2",
+    "grunt-contrib-watch": "~0.5.3",
+    "grunt-contrib-nodeunit": "~0.2.2"
+  }
+}
