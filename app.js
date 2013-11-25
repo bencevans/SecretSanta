@@ -26,31 +26,7 @@ app.configure(function() {
   app.use(app.router);
 });
 
-app.get('/', function(req, res) {
-
-  if(!req.isAuthenticated()) {
-    return res.sendfile('./views/home.html');
-  }
-
-  res.send('Hi There.');
-
-});
-
-app.get('/auth/facebook', passport.authenticate('facebook'));
-
-app.get('/auth/facebook/callback',
-  passport.authenticate('facebook', {
-    failureRedirect: '/login' 
-  }),
-  function(req, res) {
-    res.redirect('/');
-  }
-);
-
-app.get('/logout', function(req, res) {
-  req.logout();
-  res.redirect('/');
-});
+require('./server/routes')(app);
 
 http.createServer(app).listen(config.port, function() {
   console.log('Listening on port ' + config.port);
