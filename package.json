@@ -24,7 +24,8 @@
     "connect-redis": "~1.4.6",
     "extend": "~1.2.1",
     "pg": "~2.8.3",
-    "redis": "~0.9.1"
+    "redis": "~0.9.1",
+    "grunt-sequelize": "~0.2.1"
   },
   "devDependencies": {
     "grunt-contrib-jshint": "~0.7.2",

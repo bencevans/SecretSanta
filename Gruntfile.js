@@ -1,4 +1,6 @@
-/*global module:false*/
+
+var config = require('./config');
+
 module.exports = function(grunt) {
 
   // Project configuration.
@@ -26,8 +28,8 @@ module.exports = function(grunt) {
         src: ['**.js', 'server/**/*.js']
       }
     },
-    nodeunit: {
-      files: ['test/**/*_test.js']
+    sequelize: {
+      options: config.db
     },
     watch: {
       gruntfile: {
@@ -42,11 +44,12 @@ module.exports = function(grunt) {
   });
 
   // These plugins provide necessary tasks.
-  grunt.loadNpmTasks('grunt-contrib-nodeunit');
   grunt.loadNpmTasks('grunt-contrib-jshint');
   grunt.loadNpmTasks('grunt-contrib-watch');
+  grunt.loadNpmTasks('grunt-sequelize');
 
   // Default task.
-  grunt.registerTask('default', ['jshint', 'nodeunit']);
+  grunt.registerTask('default', ['jshint']);
+  grunt.registerTask('migrate', ['sequelize:migrate']);
 
 };
