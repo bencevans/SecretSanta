@@ -1,0 +1,20 @@
+extend layout
+
+block content
+  div.row
+    div.span12
+      h1(style='text-align:center;') You've been invited to do Secret Santa!
+  div.row
+    div.span12(style='text-align:center;')
+      for user in users
+        a(href='https://facebook.com/' + user.facebookId)
+          img(src='https://graph.facebook.com/' + user.facebookId + '/picture')
+  div.row
+    div.span12(style='text-align:center;')
+      if authenticated
+        form(method='POST')
+          input(type='hidden', name='group', value=group.id)
+          input(type='hidden', name='code', value=group.inviteCode)
+          input.btn(type='submit', value='Accept Invite')
+      else
+        a.btn(href='/auth/facebook') Login/Register to Accept

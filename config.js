@@ -5,6 +5,7 @@ var extend = require('extend');
 module.exports = {
   port: process.env.PORT || 3000,
   sessionSecret: null,
+  siteURL: 'http://localhost:3000',
   db: {
     dialect:  'postgres',
     username: 'postgres',

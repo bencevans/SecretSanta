@@ -1,6 +1,8 @@
 
 module.exports.facebookCallback = function(req, res) {
-  res.redirect('/');
+  var loginRedirect = req.session.loginRedirect || '/';
+  delete req.session.loginRedirect;
+  res.redirect(loginRedirect);
 };
 
 module.exports.logout = function(req, res) {

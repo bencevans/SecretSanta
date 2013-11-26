@@ -13,10 +13,13 @@ module.exports = function (app) {
   app.get('/auth/facebook/callback', passport.authenticate('facebook', { failureRedirect: '/login' }), authController.facebookCallback);
   app.get('/auth/logout', authController.logout);
 
+  app.get('/groups/:group/invite', groupsController.showInvite);
+
   app.all('*', authController.isAuthenticated);
 
   app.get('/groups', groupsController.list);
   app.post('/groups', groupsController.create);
   app.get('/groups/:group', groupsController.show);
+  app.post('/groups/:group/invite', groupsController.acceptInvite);
 
 };
