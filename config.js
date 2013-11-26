@@ -17,9 +17,27 @@ module.exports = {
     clientID: null,
     clientSecret: null,
     callbackURL: 'http://localhost:3000/auth/facebook/callback'
+  },
+  enviroments: {
+    production: {
+      siteURL: 'http://secretsanta.bensbit.co.uk',
+      db: {
+        username: process.env.DB_USERNAME,
+        password: process.env.DB_PASSWORD,
+        database: process.env.DB_DATABASE,
+        host:     process.env.DB_HOST,
+      },
+      facebook: {
+        clientID:     process.env.FACEBOOK_CLIENTID,
+        clientSecret: process.env.FACEBOOK_CLIENTSECRET,
+        callbackURL: 'http://secretsanta.bensbit.co.uk/auth/facebook/callback'
+      }
+    }
   }
 };
 
 if(fs.existsSync('./config.user.js')) {
   module.exports = extend(true, module.exports, require('./config.user.js'));
 }
+
+module.exports = extend(true, module.exports, module.exports.enviroments[process.env.NODE_ENV] || {});
