@@ -92,7 +92,6 @@ module.exports.startSecretSanta = function(req, res, next) {
         var position = false;
         while(!gifteeId || gifteeId === santaId) {
           position = _.random(0, giftees.length - 1);
-          console.log('here')
           gifteeId = giftees[position];
         }
         delete giftees[position];
