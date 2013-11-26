@@ -2,6 +2,7 @@
 var db           = require('../db');
 var randomstring = require('randomstring');
 var _            = require('underscore');
+var async        = require('async');
 
 module.exports.list = function(req, res, next) {
   req.user.getGroups({}).success(function(groups) {
@@ -31,10 +32,13 @@ module.exports.show = function(req, res, next) {
         return next();
       }
       group.getUsers({}, ['id']).success(function(users) {
-        res.render('group', {
-          group: group.dataValues,
-          users: users,
-          inviteURL: config.siteURL + '/groups/' + group.id + '/invite?code=' + group.inviteCode
+        db.Delivery.find({ groupId: group.id, santaId: req.user.id}).success(function(delivery) {
+          res.render('group', {
+            group: group.dataValues,
+            users: users,
+            inviteURL: config.siteURL + '/groups/' + group.id + '/invite?code=' + group.inviteCode,
+            giftee: _.find(users, function(user) { return user.id.toString() === delivery.santaId; })
+          });
         });
       }).error(next);
     }).error(next);
@@ -98,11 +102,16 @@ module.exports.startSecretSanta = function(req, res, next) {
         deliveries.push({ groupId: 2, santaId: santaId, gifteeId: gifteeId });
       }
 
-      console.log(deliveries);
-
-      db.Delivery.bulkCreate(deliveries).success(function() {
+      async.map(deliveries, function(delivery, done) {
+        db.Delivery.create(delivery).success(function() {
+          done();
+        }).error(done);
+      }, function(err) {
+        if(err) {
+          return next(err);
+        }
         res.redirect('/groups/' + group.id);
-      }).error(next);
+      });
 
     }).error(next);
   }).error(next);

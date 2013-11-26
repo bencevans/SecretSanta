@@ -23,6 +23,11 @@ app.configure(function() {
   app.use(express.session({ secret: 'keyboard cat', store: new RedisStore({ client: redis }) }));
   app.use(passport.initialize());
   app.use(passport.session());
+  app.use(function(req, res, next) {
+    console.log(req.user);
+    res.locals.authenticatedUser = req.user;
+    next();
+  });
   app.use(app.router);
 });
 
