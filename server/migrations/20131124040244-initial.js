@@ -5,7 +5,6 @@ module.exports = {
       id              : {
         type          : 'SERIAL',
         primaryKey    : true,
-        allowNull     : false
       },
       facebookId: DataTypes.STRING,
       createdAt: DataTypes.DATE,

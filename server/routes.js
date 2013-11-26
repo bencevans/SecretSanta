@@ -21,5 +21,6 @@ module.exports = function (app) {
   app.post('/groups', groupsController.create);
   app.get('/groups/:group', groupsController.show);
   app.post('/groups/:group/invite', groupsController.acceptInvite);
+  app.get('/groups/:group/start', groupsController.startSecretSanta);
 
 };

@@ -1,19 +1,25 @@
 
 module.exports = function (sequelize, Sequelize) {
-  return sequelize.define('group', {
-    name: {
+  return sequelize.define('delivery', {
+    santaId: {
       type: Sequelize.STRING,
       validate: {
         notNull: true
       }
     },
-    inviteCode: {
+    gifteeId: {
+      type: Sequelize.STRING,
+      validate: {
+        notNull: true
+      }
+    },
+    groupId: {
       type: Sequelize.STRING,
       validate: {
         notNull: true
       }
     }
   }, {
-    tableName: 'groups'
+    tableName: 'deliveries'
   });
 };

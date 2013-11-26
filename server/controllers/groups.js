@@ -1,6 +1,7 @@
 
-var db = require('../db');
+var db           = require('../db');
 var randomstring = require('randomstring');
+var _            = require('underscore');
 
 module.exports.list = function(req, res, next) {
   req.user.getGroups({}).success(function(groups) {
@@ -55,10 +56,10 @@ module.exports.showInvite = function(req, res, next) {
         req.session.loginRedirect = '/groups/' + group.id + '/invite?code=' + group.inviteCode;
       }
       res.render('invite', { group: group, users: users, authenticated: authenticated});
-    }).error(next)
+    }).error(next);
   })
   .error(next);
-}
+};
 
 module.exports.acceptInvite = function(req, res, next) {
   db.Group.find({ where: { id: req.body.group, inviteCode: req.body.code } })
@@ -72,4 +73,38 @@ module.exports.acceptInvite = function(req, res, next) {
     .error(next);
   })
   .error(next);
-}
+};
+
+module.exports.startSecretSanta = function(req, res, next) {
+  db.Group.find({ where: { id: req.params.group } }).success(function(group) {
+    if(!group) {
+      return next();
+    }
+    group.getUsers({}, ['id']).success(function(users) {
+
+      users = _.map(users, function(user) { return user.id; });
+      var giftees = _.clone(users);
+      var deliveries = [];
+
+      for(var i = 0; i < users.length; i++) {
+        var santaId = users[i];
+        var gifteeId = false;
+        var position = false;
+        while(!gifteeId || gifteeId === santaId) {
+          position = _.random(0, giftees.length - 1);
+          console.log('here')
+          gifteeId = giftees[position];
+        }
+        delete giftees[position];
+        deliveries.push({ groupId: 2, santaId: santaId, gifteeId: gifteeId });
+      }
+
+      console.log(deliveries);
+
+      db.Delivery.bulkCreate(deliveries).success(function() {
+        res.redirect('/groups/' + group.id);
+      }).error(next);
+
+    }).error(next);
+  }).error(next);
+};
