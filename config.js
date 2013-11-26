@@ -11,6 +11,7 @@ module.exports = {
     username: 'postgres',
     database: 'secret_santa_development',
     host:     '127.0.0.1',
+    native: true,
     migrationsPath: '../../server/migrations'
   },
   facebook: {

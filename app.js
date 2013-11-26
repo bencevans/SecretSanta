@@ -8,6 +8,15 @@ var redis      = require( "redis" ).createClient();
 
 var app = express();
 
+app.configure('production', function() {
+  var grunt = require('grunt');
+  grunt.util.spawn({ grunt: true, args: ['sequelize:migrate'] }, function(error, result) {
+    console.log(result);
+    assert.equal(result.code, 0);
+    done();
+  });
+});
+
 app.configure('development', function() {
   app.use(express.logger('dev'));
   app.locals.pretty = true;
