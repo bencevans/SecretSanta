@@ -12,7 +12,6 @@ app.configure('production', function() {
   var grunt = require('grunt');
   grunt.util.spawn({ grunt: true, args: ['sequelize:migrate'] }, function(error, result) {
     console.log(result);
-    assert.equal(result.code, 0);
     done();
   });
 });
