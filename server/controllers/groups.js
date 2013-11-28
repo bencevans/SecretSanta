@@ -33,13 +33,14 @@ module.exports.show = function(req, res, next) {
       }
       group.getUsers({}, ['id']).success(function(users) {
         db.Delivery.find({ groupId: group.id, santaId: req.user.id}).success(function(delivery) {
-          var giftee = (delivery) ? _.find(users, function(user) { return user.id.toString() === delivery.gifteeId; }) : false;
-          res.render('group', {
-            group: group.dataValues,
-            users: users,
-            inviteURL: config.siteURL + '/groups/' + group.id + '/invite?code=' + group.inviteCode,
-            giftee: giftee
-          });
+          db.User.find({where:{id:delivery.gifteeId}}, ['id']).error(next).success(function(giftee) {
+            res.render('group', {
+              group: group.dataValues,
+              users: users,
+              inviteURL: config.siteURL + '/groups/' + group.id + '/invite?code=' + group.inviteCode,
+              giftee: giftee
+            });
+          })
         });
       }).error(next);
     }).error(next);
