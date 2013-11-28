@@ -32,7 +32,7 @@ module.exports.show = function(req, res, next) {
         return next();
       }
       group.getUsers({}, ['id']).success(function(users) {
-        db.Delivery.find({ groupId: group.id, santaId: req.user.id}).success(function(delivery) {
+        db.Delivery.find({ where: {groupId: group.id, santaId: req.user.id}}).success(function(delivery) {
           console.log('deliver:', delivery.dataValues);
           db.User.find({where:{id:delivery.gifteeId}}, ['id']).error(next).success(function(giftee) {
             console.log('giftee:', giftee.dataValues);
