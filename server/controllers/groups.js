@@ -32,19 +32,26 @@ module.exports.show = function(req, res, next) {
         return next();
       }
       group.getUsers({}, ['id']).success(function(users) {
-        db.Delivery.find({ where: {groupId: group.id, santaId: req.user.id}}).success(function(delivery) {
-          console.log('deliver:', delivery.dataValues);
-          db.User.find({where:{id:delivery.gifteeId}}, ['id']).error(next).success(function(giftee) {
-            console.log('giftee:', giftee.dataValues);
-              
+        db.Delivery.find({where: {groupId: group.id.toString(), santaId: req.user.id.toString()}}).success(function(delivery) {
+
+          if(!delivery) {
+            return res.render('group', {
+              group: group.dataValues,
+              users: users,
+              inviteURL: config.siteURL + '/groups/' + group.id + '/invite?code=' + group.inviteCode,
+            });
+          }
+
+          db.User.find({where:{id:delivery.gifteeId}}, ['id']).success(function(giftee) {
             res.render('group', {
               group: group.dataValues,
               users: users,
               inviteURL: config.siteURL + '/groups/' + group.id + '/invite?code=' + group.inviteCode,
               giftee: giftee
             });
-          })
-        });
+
+          }).error(next);
+        }).error(next);
       }).error(next);
     }).error(next);
   }).error(next);
@@ -104,7 +111,7 @@ module.exports.startSecretSanta = function(req, res, next) {
           gifteeId = giftees[position];
         }
         delete giftees[position];
-        deliveries.push({ groupId: 2, santaId: santaId, gifteeId: gifteeId });
+        deliveries.push({ groupId: group.id, santaId: santaId, gifteeId: gifteeId });
       }
 
       async.map(deliveries, function(delivery, done) {
