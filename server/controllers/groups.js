@@ -33,7 +33,7 @@ module.exports.show = function(req, res, next) {
       }
       group.getUsers({}, ['id']).success(function(users) {
         db.Delivery.find({ groupId: group.id, santaId: req.user.id}).success(function(delivery) {
-          var giftee = (delivery) ? _.find(users, function(user) { return user.id.toString() === delivery.santaId; }) : false;
+          var giftee = (delivery) ? _.find(users, function(user) { return user.id.toString() === delivery.gifteeId; }) : false;
           res.render('group', {
             group: group.dataValues,
             users: users,
