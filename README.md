@@ -1,6 +1,6 @@
 # SecretSanta
 
-This Secret Santa webapp allows users to register using Facebook, create a group and then invite their friends to participate.
+This Secret Santa webapp allows users to register with Facebook, create a group and then invite their friends to participate. Once everyone's joined the group, they click a button and each persons given there Secret Santa recipient.
 
 ## Installation
 
